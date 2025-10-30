@@ -42,7 +42,7 @@ void counting_sort(int *array, size_t size)
 		free(tmp);
 		return;
 	}
-	
+
 	for (i = 0; i < size; i++)
 		tmp[array[i]]++;
 
@@ -59,7 +59,7 @@ void counting_sort(int *array, size_t size)
 
 	for (i = 0; i < size; i++)
 		array[i] = cpy[i];
-	
+
 	free(tmp);
 	free(cpy);
 }
