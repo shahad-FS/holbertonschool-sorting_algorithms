@@ -27,49 +27,56 @@ void swap_nodes(listint_t **list, listint_t *a, listint_t *b)
 }
 
 /**
- * forward_pass - One forward pass of cocktail shaker sort
- * @list: Pointer to the head of the list
- * @end: Pointer to last sorted node
+ * forward_pass - Move forward through the list, swapping as needed
+ * @list: Pointer to the head of list
  *
- * Return: 1 if any swap happened, 0 otherwise
+ * Return: Pointer to the last node reached
  */
-int forward_pass(listint_t **list, listint_t *end)
+listint_t *forward_pass(listint_t **list)
 {
-	int swapped = 0;
-	listint_t *tmp;
+	listint_t *tmp = *list, *last = NULL;
 
-	for (tmp = *list; tmp->next != end; tmp = tmp->next)
+	while (tmp && tmp->next)
 	{
 		if (tmp->n > tmp->next->n)
 		{
 			swap_nodes(list, tmp, tmp->next);
-			swapped = 1;
+			last = tmp->prev;
+		}
+		else
+		{
+			last = tmp;
+			tmp = tmp->next;
 		}
 	}
-	return swapped;
+	return (last);
 }
 
 /**
- * backward_pass - One backward pass of cocktail shaker sort
- * @list: Pointer to the head of the list
- * @start: Pointer to first sorted node
+ * backward_pass - Move backward through the list, swapping as needed
+ * @list: Pointer to the head of list
+ * @end: Pointer to the node where backward pass stops
  *
- * Return: 1 if any swap happened, 0 otherwise
+ * Return: Pointer to the first node reached
  */
-int backward_pass(listint_t **list, listint_t *start)
+listint_t *backward_pass(listint_t **list, listint_t *end)
 {
-	int swapped = 0;
-	listint_t *tmp;
+	listint_t *tmp = end, *first = NULL;
 
-	for (tmp = start->prev; tmp->prev != NULL; tmp = tmp->prev)
+	while (tmp && tmp->prev)
 	{
 		if (tmp->n < tmp->prev->n)
 		{
 			swap_nodes(list, tmp->prev, tmp);
-			swapped = 1;
+			first = tmp->next;
+		}
+		else
+		{
+			first = tmp;
+			tmp = tmp->prev;
 		}
 	}
-	return swapped;
+	return (first);
 }
 
 /**
@@ -78,19 +85,22 @@ int backward_pass(listint_t **list, listint_t *start)
  */
 void cocktail_sort_list(listint_t **list)
 {
-	int swapped;
-	listint_t *end = NULL;
+	int swapped = 1;
+	listint_t *end;
 
 	if (!list || !*list || !(*list)->next)
 		return;
-
+	
+	end = NULL;
 	while (swapped)
 	{
-		swapped = forward_pass(list, end);
-		if (!swapped)
+		swapped = 0;
+		end = forward_pass(list);
+		if (!end)
 			break;
+		if (end && end->prev)
+			swapped = 1;
 		
-		end = *list;
-		swapped = backward_pass(list, end);
+		end = backward_pass(list, end);
 	}
 }
