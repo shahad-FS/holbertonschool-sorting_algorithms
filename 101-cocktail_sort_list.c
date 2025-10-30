@@ -29,54 +29,55 @@ void swap_nodes(listint_t **list, listint_t *a, listint_t *b)
 /**
  * forward_pass - Move forward through the list, swapping as needed
  * @list: Pointer to the head of list
+ * @end: Pointer to the node where forward pass stops
  *
  * Return: Pointer to the last node reached
  */
-listint_t *forward_pass(listint_t **list)
+listint_t *forward_pass(listint_t **list, listint_t *end)
 {
-	listint_t *tmp = *list, *last = NULL;
+	listint_t *tmp = *list, *last = end;
+	int swapped = 0;
 
-	while (tmp && tmp->next)
+	while (tmp && tmp->next != last)
 	{
 		if (tmp->n > tmp->next->n)
 		{
 			swap_nodes(list, tmp, tmp->next);
-			last = tmp->prev;
+			swapped = 1;
 		}
 		else
 		{
-			last = tmp;
 			tmp = tmp->next;
 		}
 	}
-	return (last);
+	return (swapped ? tmp : NULL);
 }
 
 /**
  * backward_pass - Move backward through the list, swapping as needed
  * @list: Pointer to the head of list
- * @end: Pointer to the node where backward pass stops
+ * @start: Pointer to the node where backward pass starts
  *
- * Return: Pointer to the first node reached
+ * Return: 1 if any swap occurred, 0 otherwise
  */
-listint_t *backward_pass(listint_t **list, listint_t *end)
+int backward_pass(listint_t **list, listint_t *start)
 {
-	listint_t *tmp = end, *first = NULL;
+	listint_t *tmp = start;
+	int swapped = 0;
 
 	while (tmp && tmp->prev)
 	{
 		if (tmp->n < tmp->prev->n)
 		{
 			swap_nodes(list, tmp->prev, tmp);
-			first = tmp->next;
+			swapped = 1;
 		}
 		else
 		{
-			first = tmp;
 			tmp = tmp->prev;
 		}
 	}
-	return (first);
+	return (swapped);
 }
 
 /**
@@ -86,21 +87,18 @@ listint_t *backward_pass(listint_t **list, listint_t *end)
 void cocktail_sort_list(listint_t **list)
 {
 	int swapped = 1;
-	listint_t *end;
+	listint_t *end = NULL;
 
 	if (!list || !*list || !(*list)->next)
 		return;
 	
-	end = NULL;
 	while (swapped)
 	{
 		swapped = 0;
-		end = forward_pass(list);
+		end = forward_pass(list, end);
 		if (!end)
 			break;
-		if (end && end->prev)
+		if (backward_pass(list, end))
 			swapped = 1;
-		
-		end = backward_pass(list, end);
 	}
 }
