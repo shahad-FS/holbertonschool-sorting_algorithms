@@ -12,17 +12,17 @@ void swap_nodes(listint_t **list, listint_t *a, listint_t *b)
 		return;
 	if (a->prev)
 		a->prev->next = b;
-	b->prev = a->prev;
+	else
+		*list = b;
 
-	a->next = b->next;
 	if (b->next)
 		b->next->prev = a;
 
+	a->next = b->next;
+	b->prev = a->prev;
 	b->next = a;
 	a->prev = b;
 
-	if (!b->prev)
-		*list = b;
 	print_list(*list);
 }
 
