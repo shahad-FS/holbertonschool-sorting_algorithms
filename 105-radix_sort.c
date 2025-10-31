@@ -60,14 +60,14 @@ void radix_sort(int *array, size_t size)
 {
 	int max, exp;
 
-	if(!array || size < 2)
+	if (!array || size < 2)
 		return;
 
 	max = get_max(array, size);
 
 	for (exp = 1; max / exp > 0; exp *= 10)
 	{
-counting_sort_digit(array, size, exp);
+		counting_sort_digit(array, size, exp);
 		print_array(array, size);
 	}
 }
