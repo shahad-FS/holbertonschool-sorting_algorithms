@@ -5,7 +5,7 @@
  * @a: First integer to swap.
  * @b: Second integer to swap.
  */
-void swap_int (int *a, int *b)
+void swap_int(int *a, int *b)
 {
 	int tmp = *a;
 	*a = *b;
@@ -59,7 +59,7 @@ void bitonic_seq(int *array, size_t size, size_t start,
 
 	if (seq_size <= 1)
 		return;
-	printf("Merging [%lu%lu] (%s):\n", seq_size, size,
+	printf("Merging [%lu/%lu] (%s):\n", seq_size, size,
 			dir == 1 ? "UP" : "DOWN");
 	print_array(array + start, seq_size);
 
@@ -69,7 +69,7 @@ void bitonic_seq(int *array, size_t size, size_t start,
 	bitonic_seq(array, size, start + half, half, 0);
 	bitonic_merge(array, size, start, seq_size, dir);
 
-	printf("Result [%lu%lu] (%s):\n", seq_size, size,
+	printf("Result [%lu/%lu] (%s):\n", seq_size, size,
 			dir == 1 ? "UP" : "DOWN");
 	print_array(array + start, seq_size);
 }
