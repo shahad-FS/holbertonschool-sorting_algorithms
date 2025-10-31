@@ -8,7 +8,8 @@
  * @mid: Middle index, separates left and right
  * @right: Ending index of right subarray
  */
-void merge_subarray(int *array, int *temp, size_t left, size_t mid, size_t right)
+void merge_subarray(int *array, int *temp,
+		size_t left, size_t mid, size_t right)
 {
 	size_t i = left, j = mid, k = left;
 
@@ -71,7 +72,7 @@ void merge_sort(int *array, size_t size)
 		return;
 
 	temp = malloc(sizeof(int) * size);
-	if(!temp)
+	if (!temp)
 		return;
 
 	merge_recursive(array, temp, 0, size);
