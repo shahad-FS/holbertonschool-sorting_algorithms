@@ -37,9 +37,9 @@ void counting_sort_digit(int *array, size_t size, int exp)
 
 	for (i = 0; i < size; i++)
 		count[(array[i] / exp) % 10]++;
-	for (i = 1; 1 < 10; i++)
+	for (i = 1; i < 10; i++)
 		count[i] += count[i - 1];
-	for (i = size; i > 0; i--)
+	for (i = size - 1; (int)i >= 0; i--)
 	{
 		output[count[(array[i - 1] / exp) % 10] - 1] = array[i - 1];
 		count[(array[i - 1] / exp) % 10]--;
