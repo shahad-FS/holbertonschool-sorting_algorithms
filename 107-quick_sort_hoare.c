@@ -1,18 +1,6 @@
 #include "sort.h"
 
-/**
- * swap_ints - Swap two integers in an array.
- * @a: First integer to swap.
- * @b: Second integer to swap.
- */
-void swap_ints(int *a, int *b)
-{
-	int tmp;
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
 /**
  * hoare_partition - Partitions an array using the Hoare scheme.
  * @array: The array to partition.
@@ -22,10 +10,10 @@ void swap_ints(int *a, int *b)
  *
  * Return: The partition index.
  */
-int hoare_partition(int *array, size_t size, int low, int high)
+int hoare_partition(int *array, int low, int high, size_t size)
 {
 	int pivot = array[high];
-	int i = low - 1, j = high + 1;
+	int i = low - 1, j = high + 1, temp;
 
 	while (1)
 	{
@@ -38,7 +26,9 @@ int hoare_partition(int *array, size_t size, int low, int high)
 
 		if (i >= j)
 			return (j);
-		swap_ints(&array[i], &array[j]);
+		temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 		print_array(array, size);
 	}
 }
@@ -51,15 +41,15 @@ int hoare_partition(int *array, size_t size, int low, int high)
  * @low: The starting index of the subarray to sort.
  * @high: The ending index of the subarray to sort.
  */
-void hoare_quick_sort(int *array, size_t size, int low, int high)
+void hoare_quick_sort(int *array, int low, int high, size_t size)
 {
 	int pivot;
 
 	if (low < high)
 	{
-		pivot = hoare_partition(array, size, low, high);
-		hoare_quick_sort(array, size, low, pivot);
-		hoare_quick_sort(array, size, pivot + 1, high);
+		pivot = hoare_partition(array, low, high, size);
+		hoare_quick_sort(array, low, pivot, size);
+		hoare_quick_sort(array, pivot + 1, high, size);
 	}
 }
 
@@ -71,8 +61,8 @@ void hoare_quick_sort(int *array, size_t size, int low, int high)
  */
 void quick_sort_hoare(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
+	if (!array || size < 2)
 		return;
 
-	hoare_quick_sort(array, size, 0, size - 1);
+	hoare_quick_sort(array, 0, size - 1, size);
 }
