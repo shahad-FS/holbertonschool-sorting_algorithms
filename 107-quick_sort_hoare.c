@@ -25,7 +25,7 @@ void swap_ints(int *a, int *b)
  */
 int hoare_partition(int *array, int low, int high, size_t size)
 {
-	int pivot = array[(low + high) / 2];
+	int pivot = array[high];
 	int i = low - 1, j = high + 1;
 
 	while (1)
