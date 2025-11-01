@@ -12,7 +12,7 @@
  */
 int hoare_partition(int *array, int low, int high, size_t size)
 {
-	int pivot = array[high];
+	int pivot = array[(low + high) / 2];
 	int i = low - 1, j = high + 1, temp;
 
 	while (1)
