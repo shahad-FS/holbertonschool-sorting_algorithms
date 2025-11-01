@@ -18,7 +18,7 @@ void swap_ints(int *a, int *b)
  * hoare_lpvt - the hoare partitioning scheme for quick sort
  * @array: array of integers
  * @start: partition start index
- * @endt: partition last index
+ * @end: partition last index
  * @size: size of the array
  *
  * Return: the
@@ -32,11 +32,11 @@ int hoare_lpvt(int *array, int start, int end, size_t size)
 	j = end + 1;
 	while (1)
 	{
-		while(array[++i] < pivot)
+		while (array[++i] < pivot)
 			;
 		while (array[--j] > pivot)
 			;
-		if (i>=j)
+		if (i >= j)
 			return (j);
 		swap_ints(&array[i], &array[j]);
 		print_array(array, size);
@@ -55,7 +55,7 @@ int hoare_lpvt(int *array, int start, int end, size_t size)
 int hoare_rpvt(int *array, int start, int end, size_t size)
 {
 	int pivot, i, j;
-	
+
 	pivot = array[end];
 	i = start - 1;
 	j = end + 1;
