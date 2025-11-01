@@ -24,17 +24,15 @@ void swap_ints(int *a, int *b)
  */
 int hoare_partition(int *array, size_t size, int low, int high)
 {
-	int pivot = array[low];
+	int pivot = array[(low + high) / 2];
 	int i = low - 1, j = high + 1;
 
 	while (1)
 	{
-		do
-		{
+		do {
 			i++;
 		} while (array[i] < pivot);
-		do
-		{
+		do {
 			j--;
 		} while (array[j] > pivot);
 
@@ -46,7 +44,8 @@ int hoare_partition(int *array, size_t size, int low, int high)
 }
 
 /**
- * hoare_quick_sort - Recursively sorts an array of integers using Hoare partition.
+ * hoare_quick_sort - Recursively sorts an array
+ * of integers using Hoare partition.
  * @array: The array to sort.
  * @size: The total size of the array.
  * @low: The starting index of the subarray to sort.
